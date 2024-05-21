@@ -1,1 +1,1 @@
-# pruebas-tecnicas
+# Repo de pruebas tecnicas
