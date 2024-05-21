@@ -12,6 +12,13 @@ Crea una API REST con los siguientes endpoints:
 ```PUT /api/users/:id```: Actualiza los datos de un usuario existente.  
 ```DELETE /api/users/:id```: Elimina un usuario.  
 
+- Cada usuario tendrá los siguientes campos:  
+
+```id```: Identificador único del usuario.  
+```nombre```: Nombre completo del usuario.  
+```email```: Dirección de correo electrónico del usuario.  
+```edad```: Edad del usuario.  
+
 2. Base de datos en memoria  
 Utiliza una base de datos (por ejemplo, MongoDB o SQLite) para almacenar la información de los usuarios.
 
