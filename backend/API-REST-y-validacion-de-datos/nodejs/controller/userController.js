@@ -5,36 +5,66 @@ export class UserController {
     }
 
     getAll = async (req, res) =>{
-        const users = await this.userModel.getAll()
-        res.json(users)
+
+        try {
+            const users = await this.userModel.getAll();
+            res.status(200).json(users);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+
     }
 
     getByID = async (req, res) => {
-        const user = await this.userModel.getByID(req.params.id)
-        res.json(user)
+        try {
+            const user = await this.userModel.getByID(req.params.id)
+            res.json(user)
+        } catch (error) {
+            if (error.message === 'Usuario no encontrado.') {
+                res.status(404).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
+        }
     }
 
     create = async (req, res) => {
-        const user = await this.userModel.create(req.body)
-
-        res.status(201).json({message: 'User created successfully', userCreated: user})
+        try {
+            const user = await this.userModel.create(req.body)
+            res.status(201).json({message: 'Usuario creado correctamente', userID: user.insertId})            
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
     }
 
     update = async (req, res) => {
-        const { id } = req.body
-        const userUpdated = await this.userModel.update(id, req.body)
-
-        if(userUpdated) return res.status(201).json({message: 'User updated successfully'})
-
-        res.status(404).json({message: 'User not found'})
+        try {
+            const userUpdated = await this.userModel.update(req.params.id, req.body)
+            
+            if(userUpdated) res.status(201).json({message: 'Usuario actualizado correctamente.'})
+            
+        } catch (error) {
+            if (error.message === 'Usuario no encontrado.') {
+                res.status(404).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
+        }
     }
 
     deleteByID = async (req, res) => {
-        const user = await this.userModel.deleteByID(req.params.id)
+        try {
+            const user = await this.userModel.deleteByID(req.params.id)
+            if(user) res.status(200).json({message:'Usuario borrado correctamente', userDeleted: user})
 
-        if(!user) res.status(404).json({message: 'User not found'})
+        } catch (error) {
+            if (error.message === "Usuario no encontrado.") {
+                res.status(404).json({ error: error.message });
+            } else {
+                res.status(500).json({ error: error.message });
+            }
+        }
 
-        return res.status(200).json({message:'User deleted successfully', userDeleted: user})
     }
     
 }
