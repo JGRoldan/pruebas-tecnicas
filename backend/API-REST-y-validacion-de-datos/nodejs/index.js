@@ -1,8 +1,12 @@
 import express from 'express'
 import cors from 'cors'
 import { createUserRoutes } from './routes/userRoutes.js'
+import dotenv from 'dotenv';
 
-export const createApp = () =>{
+
+export const createApp = ({ userModel }) =>{
+    dotenv.config()
+
     const app = express()
     const PORT = process.env.PORT || 3001
     
