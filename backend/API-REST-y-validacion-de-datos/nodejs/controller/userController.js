@@ -1,3 +1,5 @@
+import { validateUser, partialValidateUser } from '../validator/userValidator.js'
+
 export class UserController {
 
     constructor ({ userModel }) {
@@ -7,10 +9,10 @@ export class UserController {
     getAll = async (req, res) =>{
 
         try {
-            const users = await this.userModel.getAll();
-            res.status(200).json(users);
+            const users = await this.userModel.getAll()
+            res.status(200).json(users)
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: error.message })
         }
 
     }
@@ -21,34 +23,36 @@ export class UserController {
             res.json(user)
         } catch (error) {
             if (error.message === 'Usuario no encontrado.') {
-                res.status(404).json({ error: error.message });
+                res.status(404).json({ error: error.message })
             } else {
-                res.status(500).json({ error: error.message });
+                res.status(500).json({ error: error.message })
             }
         }
     }
 
     create = async (req, res) => {
         try {
-            const user = await this.userModel.create(req.body)
-            res.status(201).json({message: 'Usuario creado correctamente', userID: user.insertId})            
+            const createdUser = validateUser(req.body)
+            if(!createdUser.success) return res.status(400).json({error: JSON.parse(createdUser.error.message)})
+            
+            const user = await this.userModel.create(createdUser.data)
+            res.status(201).json({message: 'Usuario creado correctamente', userID: user})            
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: error.message })
         }
     }
 
     update = async (req, res) => {
         try {
-            const userUpdated = await this.userModel.update(req.params.id, req.body)
-            
-            if(userUpdated) res.status(201).json({message: 'Usuario actualizado correctamente.'})
-            
+            const updatedUser = partialValidateUser(req.body)
+            if(!updatedUser.success) return res.status(400).json({error: JSON.parse(updatedUser.error.message)})
+
+            const user = await this.userModel.update(req.params.id, updatedUser.data)
+            if(user) res.status(201).json({message: 'Usuario actualizado correctamente.'})
+                       
         } catch (error) {
-            if (error.message === 'Usuario no encontrado.') {
-                res.status(404).json({ error: error.message });
-            } else {
-                res.status(500).json({ error: error.message });
-            }
+            if (error.message === 'Usuario no encontrado.') res.status(404).json({ error: error.message })
+            else res.status(500).json({ error: error.message })
         }
     }
 
@@ -59,9 +63,9 @@ export class UserController {
 
         } catch (error) {
             if (error.message === "Usuario no encontrado.") {
-                res.status(404).json({ error: error.message });
+                res.status(404).json({ error: error.message })
             } else {
-                res.status(500).json({ error: error.message });
+                res.status(500).json({ error: error.message })
             }
         }
 
