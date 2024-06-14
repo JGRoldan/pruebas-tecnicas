@@ -1,5 +1,6 @@
 package apirest.java.services;
 
+import apirest.java.exceptions.UserNotFoundException;
 import apirest.java.models.User;
 import apirest.java.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,24 @@ public class UserService {
     private IUserRepository userRepository;
 
     public ResponseEntity<List<User>> getUsers(){
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
     public ResponseEntity<User> getUserByID(@PathVariable Long id){
         Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(id);
+        }
         return new ResponseEntity<>(user.get(), HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteByID(@PathVariable Long id){
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException(id);
+        }
+
         userRepository.deleteById(id);
         return new ResponseEntity<>("Usuario eliminado.", HttpStatus.OK);
     }
@@ -37,7 +47,7 @@ public class UserService {
             Optional<User> userToFind = userRepository.findById(id);
 
             if (userToFind.isEmpty()) {
-                return new ResponseEntity<>("Usuario no encontrado.", HttpStatus.NOT_FOUND);
+                throw new UserNotFoundException(id);
             }
 
             User existingUser = userToFind.get();
@@ -55,6 +65,6 @@ public class UserService {
 
     public ResponseEntity<String> createUser(@RequestBody User user) {
         User savedUser = userRepository.save(user);
-        return new ResponseEntity<>("Usuario creado exitosamente con ID: " + savedUser.getId_user(), HttpStatus.CREATED);
+        return new ResponseEntity<>("Usuario creado exitosamente con ID=" + savedUser.getId_user(), HttpStatus.CREATED);
     }
 }
