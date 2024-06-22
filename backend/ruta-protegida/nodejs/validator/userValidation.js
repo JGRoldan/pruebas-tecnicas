@@ -6,8 +6,17 @@ const createUserSchema = z.object({
     role: z.enum(['user', 'admin'], {message: 'Ingrese un rol valido.'})
 })
 
+const partialUserSchema = z.object({
+    email: z.string().email({message: 'Ingrese un correo electrónico válido.'}),
+    password: z.string().min(4, {message: 'La contraseña debe tener minimo de 4 caracteres.'})
+})
+
 const validateUser = (obj) =>{
     return createUserSchema.safeParse(obj)
 }
 
-export { validateUser }
+const partialValidateUser = (obj) =>{
+    return partialUserSchema.safeParse(obj)
+}
+
+export { validateUser, partialValidateUser }
