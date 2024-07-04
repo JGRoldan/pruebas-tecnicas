@@ -1,12 +1,18 @@
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import { registerUser } from '../model/userModel.js'
 dotenv.config()
 
 const userRegister = async (req, res) => {
-    req.body.password = bcrypt.hashSync(req.body.password, 10)
-    
-    res.status(200).json('REGISTER')
+    try {
+        req.body.password = bcrypt.hashSync(req.body.password, 10)
+        const result = await registerUser(req.body)
+        res.status(201).json({ message: 'Usuario registrado correctamente', userID: result })
+    } catch (error) {
+        console.error('Error during user registration:', error)
+        res.status(500).json({ message: error.message })
+    }
 }
 
 const userLogin = async (req, res) => {
