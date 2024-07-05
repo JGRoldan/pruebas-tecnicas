@@ -22,31 +22,22 @@ Esta prueba evaluará tus habilidades en el desarrollo de aplicaciones backend u
   - `email`: Dirección de correo electrónico del usuario.
   - `contraseña`: Contraseña del usuario.
 
-### 3. Obtener lista de usuarios (ruta protegida para usuarios)
+### 3. Vista solo de usuarios (ruta protegida para usuarios)
 - **Método:** GET
-- **Ruta:** `/api/users`
-- **Descripción:** Devuelve una lista de todos los usuarios registrados.
+- **Ruta:** `/api/profile`
+- **Descripción:** Vista solo de usuarios.
 - **Requiere autenticación.**
 
-### 4. Obtener detalles de un usuario específico (ruta protegida para usuarios)
+### 4. Vista solo de admin (ruta protegida para admin)
 - **Método:** GET
-- **Ruta:** `/api/users/:id`
-- **Descripción:** Devuelve los detalles de un usuario específico identificado por su `id`.
+- **Ruta:** `/api/admin`
+- **Descripción:** Vista solo de admin.
 - **Requiere autenticación.**
-
-### 5. Actualizar datos de un usuario existente (ruta protegida para usuarios)
-- **Método:** PUT
-- **Ruta:** `/api/users/:id`
-- **Descripción:** Actualiza los datos de un usuario existente.
-- **Parámetros requeridos:**
-  - `email`: Nueva dirección de correo electrónico del usuario.
-- **Requiere autenticación.**
-
-### 6. Eliminar un usuario (ruta protegida para administradores)
-- **Método:** DELETE
-- **Ruta:** `/api/users/:id`
-- **Descripción:** Elimina un usuario específico identificado por su `id`.
-- **Requiere autenticación como administrador.**
+  
+### 5. Vista de cualquier persona (ruta no protegida)
+- **Método:** GET
+- **Ruta:** `/api/any`
+- **Descripción:** Vista de cualquier persona.
 
 ## 7. Base de Datos en Memoria
 Utilizamos una base de datos en memoria (por ejemplo, MongoDB o SQLite) para almacenar la información de los usuarios.
