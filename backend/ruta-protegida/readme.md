@@ -1,7 +1,7 @@
 # Prueba Técnica de Desarrollo Backend: Rutas Protegidas
 
 ### Descripción  
-Esta prueba evaluará tus habilidades en el desarrollo de aplicaciones backend utilizando Node.js. Deberás completar los siguientes ejercicios:
+Esta prueba evaluará tus habilidades en el desarrollo de aplicaciones backend. Deberás completar los siguientes ejercicios:
 
 ## Endpoints
 
@@ -39,11 +39,11 @@ Esta prueba evaluará tus habilidades en el desarrollo de aplicaciones backend u
 - **Ruta:** `/api/any`
 - **Descripción:** Vista de cualquier persona.
 
-## 7. Base de Datos en Memoria
+## 6. Base de Datos en Memoria
 Utilizamos una base de datos en memoria (por ejemplo, MongoDB o SQLite) para almacenar la información de los usuarios.
 
-## 8. Validación de Datos
+## 7. Validación de Datos
 Implementamos validaciones para asegurarnos de que los datos ingresados sean correctos.
 
-## 9. Documentación  
+## 8. Documentación  
 Proporciona una breve documentación en el archivo README.md sobre cómo ejecutar y probar la API.
