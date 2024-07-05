@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import { isAdministrator } from '../model/userModel.js'
 dotenv.config()
 
 const isAuthenticated = (req, res, next) => {
   try {
     const [, token] = req.header('Authorization').split(' ')
-    console.log({isAuthenticated: token})
+    //console.log({isAuthenticated: token})
 
     if (!token) return res.status(401).send({message: 'Acceso no autorizado'})
 
@@ -17,8 +18,9 @@ const isAuthenticated = (req, res, next) => {
   }
 }
 
-const isAdmin = (req, res, next) => {
-  if (req.user && req.user.email === process.env.ADMIN_MAIL) {
+const isAdmin = async(req, res, next) => {
+  const isAdmin = await isAdministrator(req.user.email)
+  if (isAdmin) {
     next()
   } else {
     res.status(403).send({message: 'Acceso denegado'})
