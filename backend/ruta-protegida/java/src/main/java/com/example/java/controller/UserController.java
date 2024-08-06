@@ -1,11 +1,11 @@
 package com.example.java.controller;
 
 
-import com.example.java.config.JWT.JwtTokenUtil;
-import com.example.java.config.PAYLOAD.JwtResponse;
-import com.example.java.config.PAYLOAD.LoginRequest;
-import com.example.java.config.PAYLOAD.MessageResponse;
-import com.example.java.config.PAYLOAD.RegisterRequest;
+import com.example.java.security.JWT.JwtTokenUtil;
+import com.example.java.security.PAYLOAD.JwtResponse;
+import com.example.java.security.PAYLOAD.LoginRequest;
+import com.example.java.security.PAYLOAD.MessageResponse;
+import com.example.java.security.PAYLOAD.RegisterRequest;
 import com.example.java.model.User;
 import com.example.java.service.UserService;
 import lombok.AllArgsConstructor;
@@ -31,9 +31,7 @@ public class UserController {
     private final JwtTokenUtil jwtTokenUtil;
 
     @GetMapping("/any")
-    public String NoAuthRequired(){
-        return "Ruta para cualquier persona.";
-    }
+    public String NoAuthRequired(){ return "Ruta para cualquier persona."; }
     @GetMapping("/auth")
     public String auth(){
         return "Ruta para cualquier persona logueada.";
@@ -44,8 +42,6 @@ public class UserController {
     }
     @PostMapping("/register")
     public ResponseEntity<MessageResponse> registerUser(@RequestBody RegisterRequest signUpRequest){
-        System.out.println("Received registration request: " + signUpRequest);
-
         if(!userService.findUserByEmail((signUpRequest.getEmail())).isEmpty()){
             return ResponseEntity
                     .badRequest()
@@ -69,7 +65,9 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenUtil.generateJwtToken(authentication);
+        Optional<User> user = userService.findUserByEmail(loginRequest.getEmail());
+
+        String jwt = jwtTokenUtil.generateJwtToken(authentication, user);
 
         return ResponseEntity.ok(new JwtResponse(jwt));
     }

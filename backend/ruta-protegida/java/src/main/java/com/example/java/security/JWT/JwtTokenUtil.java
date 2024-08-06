@@ -1,5 +1,6 @@
-package com.example.java.config.JWT;
+package com.example.java.security.JWT;
 
+import com.example.java.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
@@ -10,8 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import javax.swing.text.html.Option;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Métodos para generar y validar los token JWT
@@ -27,19 +30,19 @@ public class JwtTokenUtil {
     @Value("${app.jwt.expiration-ms}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
-
+    public String generateJwtToken(Authentication authentication, Optional<User> user) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
-        SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+        User usr = user.get();
 
+        SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
         return Jwts.builder()
                 .subject((userPrincipal.getUsername()))
+                .claim("role", usr.getRole())
                 .issuedAt(new Date())
                 .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key, Jwts.SIG.HS512)
                 .compact();
     }
-
 
     public String getUserNameFromJwtToken(String token) {
         Claims claims = Jwts.parser()
@@ -47,7 +50,16 @@ public class JwtTokenUtil {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        return claims.get("email", String.class);
+        return claims.getSubject();
+    }
+
+    public String getRoleFromJwtToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8)))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.get("role", String.class);
     }
 
     public boolean validateJwtToken(String authToken) {

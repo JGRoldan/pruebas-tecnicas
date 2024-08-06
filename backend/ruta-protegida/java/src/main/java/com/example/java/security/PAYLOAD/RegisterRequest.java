@@ -1,4 +1,4 @@
-package com.example.java.config.PAYLOAD;
+package com.example.java.security.PAYLOAD;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
