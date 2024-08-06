@@ -1,7 +1,7 @@
-package com.example.java.config;
+package com.example.java.security.config;
 
-import com.example.java.config.JWT.JwtAuthEntryPoint;
-import com.example.java.config.JWT.JwtRequestFilter;
+import com.example.java.security.JWT.JwtAuthEntryPoint;
+import com.example.java.security.JWT.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +24,6 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    private static final String ADMIN = "ADMIN";
-//    private static final String USER = "USER";
     @Autowired
     private JwtAuthEntryPoint unauthorizedHandler;
     @Bean
@@ -63,7 +61,8 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exception)-> exception.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("api/hola", "api/register", "api/login").permitAll()
+                        .requestMatchers("api/any", "api/register", "api/login").permitAll()
+                        .requestMatchers("/api/admin").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 );
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

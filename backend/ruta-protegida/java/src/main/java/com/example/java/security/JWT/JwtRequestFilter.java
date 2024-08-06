@@ -1,4 +1,4 @@
-package com.example.java.config.JWT;
+package com.example.java.security.JWT;
 
 import com.example.java.service.UserService;
 import jakarta.servlet.FilterChain;

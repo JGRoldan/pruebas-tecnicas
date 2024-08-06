@@ -1,4 +1,4 @@
-package com.example.java.config.JWT;
+package com.example.java.security.JWT;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
