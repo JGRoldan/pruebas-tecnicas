@@ -2,7 +2,6 @@ import './Products.css'
 import { AddToCartIcon } from '../icon/Icons.jsx'
 
 export function Products({ products }) {
-    products.map(product => console.log(product.title))
     return (
         <main className='products'>
             <ul>
@@ -12,6 +11,9 @@ export function Products({ products }) {
                             <img src={product.thumbnail} alt={product.description} />
                             <div>
                                 <strong>{product.title}</strong>
+                            </div>
+                            <div>
+                                ${product.price}
                             </div>
                             <button>
                                 <AddToCartIcon />
