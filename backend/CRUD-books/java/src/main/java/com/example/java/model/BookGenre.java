@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @Table(name="BookGenres")
 public class BookGenre {
 
-    @Id
+    @EmbeddedId
+    private BookGenreId id;
+
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "id_book", insertable = false, updatable = false)
     private Book book;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "genre_id", nullable = false)
+    @JoinColumn(name = "id_genre", insertable = false, updatable = false)
     private Genre genre;
 }
