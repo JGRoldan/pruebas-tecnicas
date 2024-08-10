@@ -7,17 +7,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="BookGenres")
+@Table(name="book_genres")
 public class BookGenre {
 
-    @EmbeddedId
-    private BookGenreId id;
-
+    @Id
     @ManyToOne
-    @JoinColumn(name = "id_book", insertable = false, updatable = false)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
     private Book book;
 
+    @Id
     @ManyToOne
-    @JoinColumn(name = "id_genre", insertable = false, updatable = false)
+    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
     private Genre genre;
+
 }

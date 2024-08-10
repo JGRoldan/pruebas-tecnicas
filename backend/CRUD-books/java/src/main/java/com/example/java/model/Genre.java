@@ -1,5 +1,6 @@
 package com.example.java.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +15,10 @@ public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_genre;
+    private int id_genre;
     private String name;
 
     @ManyToMany(mappedBy = "genres")
+    @JsonIgnore //Si no esta esto, hace un buble infinito con los generos
     private List<Book> books;
 }

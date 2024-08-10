@@ -14,7 +14,7 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_book;
+    private int id_book;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -24,15 +24,13 @@ public class Book {
     @JoinColumn(name = "publisher_id")
     private Publisher publisher_id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "BookGenres",
-            joinColumns = @JoinColumn(name = "id_book"),
-            inverseJoinColumns = @JoinColumn(name = "id_genre")
+            name = "book_genres",
+            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id_book"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id_genre")
     )
     private List<Genre> genres;
-//    @OneToMany(mappedBy = "book")
-//    private List<BookGenre> bookGenres;
 
     private String summary;
     private String ISBN;
