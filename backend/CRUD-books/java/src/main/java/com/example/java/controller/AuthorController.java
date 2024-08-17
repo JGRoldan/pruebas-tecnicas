@@ -1,5 +1,6 @@
 package com.example.java.controller;
 
+import com.example.java.Response.ApiResponse;
 import com.example.java.model.Author;
 import com.example.java.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,27 +17,27 @@ public class AuthorController {
     private AuthorService authorService;
 
     @GetMapping
-    public ResponseEntity<List<Author>> getAllAuthors(){
+    public ResponseEntity<ApiResponse<List<Author>>> getAllAuthors(){
         return authorService.getAllAuthors();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Author> getAuthorByID(@PathVariable Integer id){
+    public ResponseEntity<ApiResponse<Author>> getAuthorByID(@PathVariable Integer id){
         return authorService.getAuthorByID(id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Author> deleteAuthorByID(@PathVariable Integer id){
+    public ResponseEntity<ApiResponse<Author>> deleteAuthorByID(@PathVariable Integer id){
         return authorService.deleteAuthorByID(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthorByID(@PathVariable Integer id, @RequestBody Author author){
+    public ResponseEntity<ApiResponse<Author>> updateAuthorByID(@PathVariable Integer id, @RequestBody Author author){
         return authorService.updateAuthorByID(id, author);
     }
 
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
+    public ResponseEntity<ApiResponse<Author>> createAuthor(@RequestBody Author author) {
         return authorService.createAuthor(author);
     }
 }
