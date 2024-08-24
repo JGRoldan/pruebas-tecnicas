@@ -33,11 +33,11 @@ public class AuthorService {
             Author author =  optionalAuthor.get();
             ApiResponse<Author> response = new ApiResponse<>(HttpStatus.OK.value(), "Autor encontrado exitosamente con id: " + id, author);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            ApiResponse<Author> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "Autor no encontrado con id: " + id, null);
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
+        ApiResponse<Author> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "Autor no encontrado con id: " + id, null);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
 
     public ResponseEntity<ApiResponse<Author>> deleteAuthorByID(@PathVariable Integer id){
         Optional<Author> author = authorRepository.findById(id);
@@ -48,10 +48,9 @@ public class AuthorService {
 
             ApiResponse<Author> response = new ApiResponse<>(HttpStatus.OK.value(), "Autor borrado exitosamente.", deletedAuthor);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        } else {
-            ApiResponse<Author> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "Autor no encontrado con id: " + id, null);
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
+        ApiResponse<Author> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "Autor no encontrado con id: " + id, null);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<ApiResponse<Author>> updateAuthorByID(@PathVariable Integer id, @RequestBody Author author) {
