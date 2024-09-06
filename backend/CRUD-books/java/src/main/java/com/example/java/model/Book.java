@@ -31,7 +31,6 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id_genre")
     )
     private List<Genre> genres;
-
     private String summary;
     private String ISBN;
     private int pageCount;
