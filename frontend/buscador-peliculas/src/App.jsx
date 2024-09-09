@@ -4,15 +4,15 @@ import { Movies } from './components/Movies'
 import { useSearch } from './hooks/useSearch'
 
 function App() {
-  const { movies } = useMovies()
   const { search, setSearch, error } = useSearch()
+  const { movies, getMovies } = useMovies({ search })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(search)
     /*const { movieName } = Object.fromEntries(new FormData(e.target))
     console.log(movieName)
     e.target.reset()*/
+    getMovies()
 
   }
   
