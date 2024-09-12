@@ -2,10 +2,12 @@ import './App.css'
 import { useMovies } from './hooks/useMovie'
 import { Movies } from './components/Movies'
 import { useSearch } from './hooks/useSearch'
+import { useState } from 'react'
 
 function App() {
   const { search, setSearch, error } = useSearch()
-  const { movies, getMovies } = useMovies({ search })
+  const [sort, setSort] = useState(false)
+  const { movies, getMovies, loading } = useMovies({ search, sort })
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -19,19 +21,24 @@ function App() {
   const handleSearch = (e) => {
     setSearch(e.target.value)
   }
-  console.log('render')
+
+  const handleSort = () => {
+    setSort(!sort)
+  }
+
   return (
     <div className='page'>
       <header>
         <form autoComplete='off' className='form' onSubmit={handleSubmit}>
           <input value={search} onChange={handleSearch} type='text' placeholder='The Matrix, Avengers...' name='movieName' />
+          <input type="checkbox" onChange={handleSort} checked={sort}/>
           <button type='submit'>Buscar</button>
         </form>
         {error && <p style={{color:'red'}}>{error}</p>}
       </header>
 
       <main>
-        <Movies movies={movies} />
+        { loading ? <p>Cargando...</p> : <Movies movies={movies} /> }
       </main>
     </div>
   )
