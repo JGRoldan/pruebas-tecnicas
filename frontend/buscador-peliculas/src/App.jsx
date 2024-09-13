@@ -2,29 +2,45 @@ import './App.css'
 import { useMovies } from './hooks/useMovie'
 import { Movies } from './components/Movies'
 import { useSearch } from './hooks/useSearch'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+import debounce from "just-debounce-it";
 
 function App() {
   const { search, setSearch, error } = useSearch()
   const [sort, setSort] = useState(false)
   const { movies, getMovies, loading } = useMovies({ search, sort })
 
+
+  const debouncedGetMovies = useCallback(
+    debounce(search => {
+      getMovies({search})
+    }, 500)
+    , []
+  )
+
   const handleSubmit = (e) => {
     e.preventDefault()
     /*const { movieName } = Object.fromEntries(new FormData(e.target))
     console.log(movieName)
     e.target.reset()*/
-    getMovies()
+    getMovies({search})
 
   }
   
   const handleSearch = (e) => {
-    setSearch(e.target.value)
+    const newSearch = e.target.value
+    setSearch(newSearch)
+    debouncedGetMovies(newSearch)
   }
 
   const handleSort = () => {
     setSort(!sort)
   }
+
+  //Para ver cuantas veces se ejecuta la funcion getMovies
+  // useEffect(() => {
+  //   console.log('Recibe getMovies')
+  // },[getMovies])
 
   return (
     <div className='page'>

@@ -19,6 +19,8 @@ API a usar: - https://www.omdbapi.com/ Consigue la API Key en la propia página 
 
 - Evitar que se haga la misma búsqueda dos veces seguidas. ✅ (useRef)
 
-- Haz que la búsqueda se haga automáticamente al escribir. 
+- Haz que la búsqueda se haga automáticamente al escribir. ✅
 
-- Evita que se haga la búsqueda continuamente al escribir (debounce). 
+- Evita que se haga la búsqueda continuamente al escribir (debounce). ✅
+
+
