@@ -1,4 +1,5 @@
 import { type ListOfTodos } from "../types"
+import { Todo } from "./Todo"
 
 interface Props {
     todos: ListOfTodos
@@ -8,10 +9,15 @@ interface Props {
 //React.FC<Props> es un tipo generico que recibe un tipo de props.
 export const Todos: React.FC<Props> = ({ todos }) => {
     return ( 
-        <ul>
+        <ul className="todo-list">
             {todos.map((todo) => (
                 <li key={todo.id} className={`${todo.done ? 'completed': ''}`}>
-                    {todo.title}
+                    <Todo 
+                        key={todo.id}
+                        id={todo.id}
+                        title={todo.title}
+                        done={todo.done}
+                    />
                 </li>
             ))}
         </ul>
