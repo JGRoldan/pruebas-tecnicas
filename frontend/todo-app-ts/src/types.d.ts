@@ -3,5 +3,11 @@ export interface Todo {
     title: string
     done: boolean
 }
+
+export type TodoId = Pick<Todo, 'id'>
+export type TodoTitle = Pick<Todo, 'title'>
+export type TodoDone = Pick<Todo, 'done'>
+export type TodoCompleted = Pick<Todo, 'id' | 'done'>
+
 //type ListOfTodos = Array<Todo>
 export type ListOfTodos = Todo[]
