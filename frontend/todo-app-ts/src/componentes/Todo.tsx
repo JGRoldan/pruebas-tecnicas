@@ -8,7 +8,6 @@ interface Props extends TodoType {
 export const Todo: React.FC<Props> = ({ id, title, done, onRemoveTodo, onToggleDone }) =>{
     
     const handleChangeCheckBox = (e: React.ChangeEvent<HTMLInputElement>):void => {
-        e.preventDefault();
         onToggleDone({
             id,
             done:e.target.checked
