@@ -1,29 +1,48 @@
-import { type TodoId, type ListOfTodos, type TodoCompleted } from "../types"
-import { Todo } from "./Todo"
+import { useState } from "react";
+import { type Todo as TodoType } from "../types";
+import { Todo } from "./Todo";
 
 interface Props {
-    todos: ListOfTodos
-    onRemoveTodo: ({id}: TodoId) => void
-    onToggleDone: ({id, done}: TodoCompleted) => void
+  todos: TodoType[];
+  setCompleted: (id: string, completed: boolean) => void;
+  setTitle: (params: Omit<TodoType, "done">) => void;
+  removeTodo: (id: string) => void;
 }
 
-//React.FC funcional component, recibe un tipo de props y devuelve un JSX.Element
-//React.FC<Props> es un tipo generico que recibe un tipo de props.
-export const Todos: React.FC<Props> = ({ todos, onRemoveTodo, onToggleDone }) => {
-    return ( 
-        <ul className="todo-list">
-            {todos.map((todo) => (
-                <li key={todo.id} className={`${todo.done ? 'completed': ''}`}>
-                    <Todo 
-                        key={todo.id}
-                        id={todo.id}
-                        title={todo.title}
-                        done={todo.done}
-                        onRemoveTodo={onRemoveTodo}
-                        onToggleDone={onToggleDone}
-                    />
-                </li>
-            ))}
-        </ul>
-    )
-}
+export const Todos: React.FC<Props> = ({
+  todos,
+  setCompleted,
+  setTitle,
+  removeTodo,
+}) => {
+  const [isEditing, setIsEditing] = useState("");
+
+  return (
+    <ul className="todo-list">
+      {todos?.map((todo) => (
+        <li
+          key={todo.id}
+          onDoubleClick={() => {
+            setIsEditing(todo.id);
+          }}
+          className={`
+            ${todo.done ? "completed" : ""}
+            ${isEditing === todo.id ? "editing" : ""}
+          `}
+        >
+          <Todo
+            key={todo.id}
+            id={todo.id}
+            title={todo.title}
+            completed={todo.done}
+            setCompleted={setCompleted}
+            setTitle={setTitle}
+            removeTodo={removeTodo}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};
