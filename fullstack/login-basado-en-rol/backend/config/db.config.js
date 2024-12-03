@@ -4,6 +4,8 @@ import { rolModel } from '../model/rol.js'
 import { Sequelize } from 'sequelize'
 import { userModel } from '../model/user.js'
 import '../utils/envConfig.js'
+import mysql2 from 'mysql2'
+
 
 export const sequelize = new Sequelize({
     dialect: 'mysql',
@@ -12,7 +14,7 @@ export const sequelize = new Sequelize({
     password: process.env.PASSWORD,
     host: process.env.HOST,
     port: process.env.DB_PORT,
-    dialectModule: 'mysql2',
+    dialectModule: mysql2,
 })
 
 const db = {}
