@@ -15,7 +15,7 @@ const app = express()
 const PORT = process.env.PORT || 3001
 
 app.use(cors({
-    origin: "http://localhost:5173", // Dominio del frontend
+    origin: process.env.ORIGIN, // Dominio del frontend
     credentials: true,               // Permitir envío de cookies
 }))
 app.use(express.json())
