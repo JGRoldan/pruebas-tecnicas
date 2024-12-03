@@ -12,6 +12,7 @@ export const sequelize = new Sequelize({
     password: process.env.PASSWORD,
     host: process.env.HOST,
     port: process.env.DB_PORT,
+    dialectModule: require('mysql2'),
 })
 
 const db = {}
