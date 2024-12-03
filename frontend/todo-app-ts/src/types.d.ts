@@ -10,6 +10,6 @@ export type TodoDone = Pick<Todo, 'done'>
 export type TodoCompleted = Pick<Todo, 'id' | 'done'>
 
 //type ListOfTodos = Array<Todo>
-export type ListOfTodos = Todo[]
+export type TodoList = Todo[]
 
 export type FilterValue = typeof TODO_FILTERS[keyof typeof TODO_FILTERS]
