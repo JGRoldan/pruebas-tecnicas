@@ -15,6 +15,12 @@ export const sequelize = new Sequelize({
     host: process.env.HOST,
     port: process.env.DB_PORT,
     dialectModule: mysql2,
+    pool: {
+        max: 3, // No usar más de 3 conexiones simultáneas para evitar agotarlas
+        min: 0, // Permite cerrar todas las conexiones inactivas
+        acquire: 30000, // Tiempo máximo para intentar conectar antes de lanzar un error
+        idle: 10000, // Tiempo que una conexión puede estar inactiva antes de cerrarse
+    },
 })
 
 const db = {}
