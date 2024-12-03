@@ -35,3 +35,5 @@ app.use('/api', [authenticateToken, authenticateRole], rolRoute)
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
+
+export default app
