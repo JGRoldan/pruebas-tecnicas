@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { userLoginRepository } from '../repositories/userLoginRepository.js'
 
 const JWT_SECRET = process.env.SECRET_KEY
-const COOKIE_EXPIRATION = 1000 * 60 * 60 * 24 // 1 dia
+const COOKIE_EXPIRATION = 1000 * 60 * 5 // 5 minutes
 
 export const userLoginController = async (req, res) => {
     try {
@@ -43,6 +43,10 @@ export const userLoginController = async (req, res) => {
 }
 
 export const userLogoutController = (req, res) => {
-    res.clearCookie('authToken')
+    res.clearCookie('authToken', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production' ? true : false,
+        sameSite: "none",
+    })
     return res.status(200).json({ message: 'Logout successful.' })
 }
