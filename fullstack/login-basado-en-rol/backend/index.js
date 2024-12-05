@@ -22,6 +22,10 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
 
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
 app.use('/api', loginRoute)
 app.use('/api', [authenticate], registerRoute)
 app.use('/api', [authenticate], productRoute)
