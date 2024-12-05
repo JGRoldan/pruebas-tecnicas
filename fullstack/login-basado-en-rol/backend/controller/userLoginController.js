@@ -36,17 +36,23 @@ export const userLoginController = async (req, res) => {
         return res.status(200).json({ message: 'Login successful', username: usernameRecord, role })
 
     } catch (error) {
-        console.error('Error during user login in controller:', error)
+        console.error('Error during user login:', error)
         return res.status(500).json({ message: error.message })
     }
 
 }
 
 export const userLogoutController = (req, res) => {
-    res.clearCookie('authToken', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
-        sameSite: "none",
-    })
-    return res.status(200).json({ message: 'Logout successful.' })
+    try {
+        res.clearCookie('authToken', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            sameSite: "none",
+        })
+        return res.status(200).json({ message: 'Logout successful.' })
+    }
+    catch (error) {
+        console.error('Error during user logout:', error)
+        return res.status(500).json({ message: error.message })
+    }
 }

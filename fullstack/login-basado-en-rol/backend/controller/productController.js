@@ -12,7 +12,7 @@ export const getAllProductsController = async (req, res) => {
         const modifiedResult = modifiedData(result)
         return res.status(200).json({ result: modifiedResult })
     } catch (error) {
-        console.error("Error obtaining all products in controller: ", error)
+        console.error("Error obtaining all products: ", error)
         res.status(500).json({ message: error.message })
     }
 }
@@ -30,7 +30,7 @@ export const getQuantityCreatedByMeController = async (req, res) => {
         const result = await getProductByAdminAssistRepository(id_user)
         res.status(200).json({ result })
     } catch (error) {
-        console.error("Error obtaining quantity of products created by me in controller: ", error)
+        console.error("Error obtaining quantity of products created by me: ", error)
         res.status(500).json({ message: error.message })
     }
 }
@@ -53,7 +53,7 @@ export const createProductController = async (req, res) => {
         const result = await createProductRepository(modifiedData)
         return res.status(200).json({ message: 'Product created.', result })
     } catch (error) {
-        console.error("Error creating product in controller: ", error)
+        console.error("Error creating product: ", error)
         res.status(500).json({ message: error.message })
     }
 }
@@ -63,7 +63,7 @@ export const getProductLogsController = async (req, res) => {
         const result = await getProductLogsRepository(req.params.id)
         res.status(200).json(result)
     } catch (error) {
-        console.error("Error obtaining product logs in controller: ", error)
+        console.error("Error obtaining product logs: ", error)
         res.status(500).json({ message: error.message })
     }
 }

@@ -12,7 +12,7 @@ export const getAllUserController = async (req, res) => {
         })
         return res.status(200).json(users)
     } catch (error) {
-        console.error('Error searching user in controller:', error)
+        console.error('Error searching user:', error)
         return res.status(500).json({ message: error.message })
     }
 }
@@ -23,7 +23,7 @@ export const getUserController = async (req, res) => {
         const result = await getUserRepository(username)
         return res.status(200).json(result)
     } catch (error) {
-        console.error('Error searching user in controller:', error)
+        console.error('Error searching user:', error)
         return res.status(500).json({ message: error.message })
     }
 }

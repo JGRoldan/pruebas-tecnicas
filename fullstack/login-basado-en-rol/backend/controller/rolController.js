@@ -5,7 +5,7 @@ export const getAllRolController = async (req, res) => {
         const result = await getAllRolRepository()
         res.status(200).json(result)
     } catch (error) {
-        console.error("Error obtaining roles in controller: ", error)
+        console.error("Error obtaining roles: ", error)
         res.status(500).json({ message: error.message })
     }
 }
@@ -22,7 +22,7 @@ export const createRolController = async (req, res) => {
         const result = await createRolRepository(req.body)
         res.status(200).json({ message: 'Created role.', result })
     } catch (error) {
-        console.error("Error creating role in controller: ", error)
+        console.error("Error creating role: ", error)
         res.status(500).json({ message: error.message })
     }
 }

@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.SECRET_KEY
 export const authenticateToken = (req, res, next) => {
     const token = req.cookies.authToken
     if (!token) {
-        return res.status(401).json({ message: 'Unauthorized. No token provided middleware.' })
+        return res.status(401).json({ message: 'Unauthorized. No token provided.' })
     }
 
     try {
