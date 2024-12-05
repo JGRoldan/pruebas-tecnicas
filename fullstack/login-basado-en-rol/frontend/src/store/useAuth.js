@@ -10,8 +10,20 @@ export const useAuth = create(persist((set) => ({
     incrementProductCreated: () => set((state) => ({ quantityProductCreated: state.quantityProductCreated + 1 })),
     login: () => set({ isLoggedIn: true }),
     logout: async () => {
-        await fetch(`${URL}/logout`, { method: 'POST', credentials: 'include' })
-        set({ isLoggedIn: false, role: "", username: "", quantityProductCreated: 0 })
+        try {
+            const response = await fetch(`${URL}/logout`, {
+                method: 'POST',
+                credentials: 'include'
+            })
+
+            if (!response.ok) {
+                throw new Error(`Logout failed: ${response.statusText}`)
+            }
+
+            set({ isLoggedIn: false, role: "", username: "", quantityProductCreated: 0 })
+        } catch (error) {
+            console.error('Error during logout:', error)
+        }
     },
     initializeAuth: async () => {
         try {

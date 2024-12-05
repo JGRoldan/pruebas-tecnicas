@@ -15,8 +15,8 @@ const Header = () => {
     const userName = useAuth(state => state.username)
     const role = useAuth(state => state.role)
 
-    const handleLogout = () => {
-        logout()
+    const handleLogout = async () => {
+        await logout()
         window.location.href = '/'
     }
 
