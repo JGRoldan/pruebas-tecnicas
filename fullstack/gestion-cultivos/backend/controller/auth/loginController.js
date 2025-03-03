@@ -2,13 +2,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { loginRepository, refreshTokenRepository } from '../../repositorie/auth/loginRepository.js'
 import { HTTP_STATUS } from '../../utils/statusCode.js'
-
-const JWT_SECRET = process.env.SECRET_KEY
-const JWT_REFRESH_SECRET = process.env.REFRESH_KEY
-const JWT_EXPIRATION = '5m'
-const JWT_REFRESH_EXPIRATION = '1d'
-const COOKIE_EXPIRATION = 1000 * 60 * 60 // 1 hour 
-const COOKIE_REFRESH_EXPIRATION = 1000 * 60 * 60 * 24 * 7 // 7 days
+import { authConfig } from '../../utils/authConfig.js'
 
 export const loginController = async (req, res) => {
     try {
@@ -23,8 +17,8 @@ export const loginController = async (req, res) => {
             return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'Invalid password.', status: HTTP_STATUS.UNAUTHORIZED })
         }
 
-        const token = jwt.sign({ username: farmer.username }, JWT_SECRET, { expiresIn: JWT_EXPIRATION })
-        const refreshToken = jwt.sign({ username: farmer.username }, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION })
+        const token = jwt.sign({ username: farmer.username }, authConfig.JWT_SECRET, { expiresIn: authConfig.EXPIRATION_TIME })
+        const refreshToken = jwt.sign({ username: farmer.username }, authConfig.JWT_REFRESH_SECRET, { expiresIn: authConfig.REFRESH_EXPIRATION_TIME })
 
         const updateRefreshToken = await refreshTokenRepository(farmer.id, refreshToken)
         if (!updateRefreshToken) {
@@ -35,7 +29,7 @@ export const loginController = async (req, res) => {
         res.cookie('authToken', token, {
             httpOnly: true,        // Evita acceso desde JavaScript en el navegador
             secure: false, // true en producción para HTTPS
-            maxAge: COOKIE_EXPIRATION,
+            maxAge: authConfig.COOKIE_EXPIRATION_TIME,
             sameSite: "none",   // Protege contra CSRF
         })
 
@@ -43,7 +37,7 @@ export const loginController = async (req, res) => {
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,        // Evita acceso desde JavaScript en el navegador
             secure: false, // true en producción para HTTPS
-            maxAge: COOKIE_REFRESH_EXPIRATION,
+            maxAge: authConfig.COOKIE_EXPIRATION_TIME_REFRESH,
             sameSite: "none",   // Protege contra CSRF
         })
 
