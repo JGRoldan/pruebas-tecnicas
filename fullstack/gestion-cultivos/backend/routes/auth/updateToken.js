@@ -3,7 +3,6 @@ import { updateTokenController } from '../../controller/auth/updateTokenControll
 
 const updateToken = express.Router()
 
-updateToken
-    .get('/updateToken', updateTokenController)
+updateToken.get('/', updateTokenController)
 
 export default updateToken

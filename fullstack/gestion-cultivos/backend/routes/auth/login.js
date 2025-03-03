@@ -5,7 +5,6 @@ import { validateSchema } from '../../middleware/validateSchema.js'
 
 const login = express.Router()
 
-login
-    .post('/login', validateSchema(registerValidation), loginController)
+login.post('/', validateSchema(registerValidation), loginController)
 
 export default login

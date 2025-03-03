@@ -5,7 +5,6 @@ import { validateSchema } from '../../middleware/validateSchema.js'
 
 const register = express.Router()
 
-register
-    .post('/register', validateSchema(registerValidation), registerController)
+register.post('/', validateSchema(registerValidation), registerController)
 
 export default register
