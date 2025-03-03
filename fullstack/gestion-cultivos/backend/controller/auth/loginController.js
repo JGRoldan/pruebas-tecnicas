@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { loginRepository, refreshTokenRepository } from '../../repositorie/auth/loginRepository.js'
+import { HTTP_STATUS } from '../../utils/statusCode.js'
 
 const JWT_SECRET = process.env.SECRET_KEY
 const JWT_REFRESH_SECRET = process.env.REFRESH_KEY
@@ -14,12 +15,12 @@ export const loginController = async (req, res) => {
         const { username, password } = req.body
         const farmer = await loginRepository(username)
         if (!farmer) {
-            return res.status(404).json({ message: 'Farmer not found.' })
+            return res.status(HTTP_STATUS.NOT_FOUND).json({ message: 'Farmer not found.', status: HTTP_STATUS.NOT_FOUND })
         }
 
         const isPasswordValid = bcrypt.compareSync(password, farmer.password)
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid password.' })
+            return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'Invalid password.', status: HTTP_STATUS.UNAUTHORIZED })
         }
 
         const token = jwt.sign({ username: farmer.username }, JWT_SECRET, { expiresIn: JWT_EXPIRATION })
@@ -27,7 +28,7 @@ export const loginController = async (req, res) => {
 
         const updateRefreshToken = await refreshTokenRepository(farmer.id, refreshToken)
         if (!updateRefreshToken) {
-            return res.status(500).json({ message: 'Error updating refresh token.' })
+            return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Error updating refresh token.', status: HTTP_STATUS.INTERNAL_SERVER_ERROR })
         }
 
         // Configura la cookie con el token
@@ -46,10 +47,10 @@ export const loginController = async (req, res) => {
             sameSite: "none",   // Protege contra CSRF
         })
 
-        return res.status(200).json({ message: 'Farmer logged in successfully.' })
+        return res.status(HTTP_STATUS.OK).json({ message: 'Farmer logged in successfully.', status: HTTP_STATUS.OK })
 
     } catch (error) {
         console.error('Error during farmer login:', error)
-        return res.status(500).json({ message: error.message })
+        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message, status: HTTP_STATUS.INTERNAL_SERVER_ERROR })
     }
 }

@@ -1,0 +1,9 @@
+export const HTTP_STATUS = {
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    OK: 200,
+    INTERNAL_SERVER_ERROR: 500,
+    NOT_FOUND: 404,
+    CREATED: 201,
+    BAD_REQUEST: 400,
+}
