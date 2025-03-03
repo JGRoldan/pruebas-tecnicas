@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express from 'express'
+import register from './routes/auth/register.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -13,6 +14,8 @@ app.use(express.urlencoded({ extended: true }))
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
+
+app.use('/api', register)
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
