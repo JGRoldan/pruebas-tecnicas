@@ -10,16 +10,12 @@ export const authToken = async (req, res, next) => {
             return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'Unauthorized.', status: HTTP_STATUS.UNAUTHORIZED })
         }
 
-        jwt.verify(token, JWT_SECRET, (error, decoded) => {
-            if (error) {
-                return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'Unauthorized.', status: HTTP_STATUS.UNAUTHORIZED })
-            }
-            req.username = decoded.username
-            next()
-        })
+        const decoded = jwt.verify(token, JWT_SECRET)
+        req.username = decoded.username
+        next()
 
     } catch (error) {
         console.error('Error during authentication:', error)
-        return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: error.message, status: HTTP_STATUS.INTERNAL_SERVER_ERROR })
+        return res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'Unauthorized.', status: HTTP_STATUS.UNAUTHORIZED })
     }
 }
