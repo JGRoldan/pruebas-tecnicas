@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express from 'express'
 import authRoutes from './routes/auth/index.js'
+import cultivoRoutes from './routes/cultivos/index.js'
 import { authToken } from './middleware/authToken.js'
 
 const app = express()
@@ -13,10 +14,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/api/auth', authRoutes)
-
-app.get('/api/test', authToken, (req, res) => {
-    res.send('private route!')
-})
+app.use('/api', authToken, cultivoRoutes)
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
