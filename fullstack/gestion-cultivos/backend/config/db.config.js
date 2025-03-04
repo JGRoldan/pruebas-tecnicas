@@ -1,5 +1,8 @@
 import { Sequelize } from 'sequelize'
 import { agricultorModel } from '../model/agricultor.js'
+import { ubicacionModel } from '../model/ubicacion.js'
+import { cultivoModel } from '../model/cultivo.js'
+import { condicionesClimaticasModel } from '../model/condicionesClimaticas.js'
 import mysql2 from 'mysql2'
 
 export const sequelize = new Sequelize({
@@ -24,6 +27,23 @@ db.sequelize = sequelize
 
 // Importar los modelos
 db.agricultorModel = agricultorModel(sequelize, Sequelize)
+db.ubicacionModel = ubicacionModel(sequelize, Sequelize)
+db.cultivoModel = cultivoModel(sequelize, Sequelize)
+db.condicionesClimaticasModel = condicionesClimaticasModel(sequelize, Sequelize)
+
+// Definir las relaciones entre los modelos
+
+// Un cultivo tiene muchas condiciones climáticas
+db.cultivoModel.hasMany(db.condicionesClimaticasModel, { foreignKey: 'cultivo_id', onDelete: 'CASCADE' })
+db.condicionesClimaticasModel.belongsTo(db.cultivoModel, { foreignKey: 'cultivo_id' })
+
+// Un cultivo tiene una ubicación
+db.ubicacionModel.hasOne(db.cultivoModel, { foreignKey: 'ubicacion_id', onDelete: 'CASCADE' })
+db.cultivoModel.belongsTo(db.ubicacionModel, { foreignKey: 'ubicacion_id' })
+
+// Un agricultor puede tener muchos cultivos
+db.agricultorModel.hasMany(db.cultivoModel, { foreignKey: 'agricultor_id', onDelete: 'CASCADE' })
+db.cultivoModel.belongsTo(db.agricultorModel, { foreignKey: 'agricultor_id' })
 
 // Verificar la conexión a la base de datos
 sequelize

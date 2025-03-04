@@ -10,10 +10,10 @@ CREATE TABLE cultivo (
     agricultor_id TINYINT NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     fecha_siembre DATE NOT NULL,
-    id_ubicacion TINYINT NOT NULL,
+    ubicacion_id TINYINT NOT NULL,
     rendimiento_esperado FLOAT NOT NULL,
     FOREIGN KEY (agricultor_id) REFERENCES agricultor(id) ON DELETE CASCADE, -- If agricultor is deleted, delete all his crops
-    FOREIGN KEY (id_ubicacion) REFERENCES ubicacion(id) ON DELETE CASCADE -- If location is deleted, delete all crops in that location
+    FOREIGN KEY (ubicacion_id) REFERENCES ubicacion(id) ON DELETE CASCADE -- If location is deleted, delete all crops in that location
 );
 
 CREATE TABLE condiciones_climaticas (
@@ -37,7 +37,7 @@ INSERT INTO agricultor (username, password)
 VALUES ('agricultor1', 'agricultor1'), 
        ('agricultor2', 'agricultor2');
 
-INSERT INTO cultivo (agricultor_id, nombre, fecha_siembre, id_ubicacion, rendimiento_esperado)
+INSERT INTO cultivo (agricultor_id, nombre, fecha_siembre, ubicacion_id, rendimiento_esperado)
 VALUES (1, 'cultivo1', '2021-01-01', 1, 100.5),
        (1, 'cultivo2', '2021-01-01', 2, 200.5),
        (2, 'cultivo3', '2021-01-01', 3, 300.5);
