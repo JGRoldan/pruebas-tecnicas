@@ -52,5 +52,5 @@ VALUES (1, 10.5, 10.5, '2021-01-01 10:00:00'),
 
 INSERT INTO ubicacion (latitud, longitud, nombre)
 VALUES (10.5, 20.5, 'ubicacion1'),
-       (10.5, 20.5, 'ubicacion2'),
-       (10.5, 20.5, 'ubicacion3');
+       (20.5, 40.5, 'ubicacion2'),
+       (30.5, 60.5, 'ubicacion3');
