@@ -1,11 +1,13 @@
+import { Outlet } from "react-router-dom"
 import './App.css'
 
 function App() {
 
   return (
-    <>
-      <h1 className='text-3xl font-bold underline'>TEST</h1>
-    </>
+    <div>
+      <Outlet />
+      <footer className="text-center">Designed by <a className="text-sky-500" href="https://github.com/JGRoldan" target="_blank">JGRoldan</a> w/ ❤</footer>
+    </div>
   )
 }
 
