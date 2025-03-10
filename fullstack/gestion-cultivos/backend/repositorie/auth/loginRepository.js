@@ -13,7 +13,6 @@ export const loginRepository = async (username) => {
 export const refreshTokenRepository = async (id, refreshToken) => {
     try {
         const result = await db.agricultorModel.findOne({ where: { id } })
-        console.log(result)
         const update = await result.update({ refresh_token: refreshToken })
         return update
     } catch (error) {
