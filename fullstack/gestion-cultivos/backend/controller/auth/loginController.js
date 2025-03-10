@@ -30,7 +30,7 @@ export const loginController = async (req, res) => {
             httpOnly: true,        // Evita acceso desde JavaScript en el navegador
             secure: false, // true en producción para HTTPS
             maxAge: authConfig.COOKIE_EXPIRATION_TIME,
-            sameSite: "none",   // Protege contra CSRF
+            sameSite: "lax",   // Protege contra CSRF
         })
 
         // Configura la cookie con el refresh token
@@ -38,7 +38,7 @@ export const loginController = async (req, res) => {
             httpOnly: true,        // Evita acceso desde JavaScript en el navegador
             secure: false, // true en producción para HTTPS
             maxAge: authConfig.COOKIE_EXPIRATION_TIME_REFRESH,
-            sameSite: "none",   // Protege contra CSRF
+            sameSite: "lax",   // Protege contra CSRF
         })
 
         return res.status(HTTP_STATUS.OK).json({ message: 'Farmer logged in successfully.', status: HTTP_STATUS.OK })

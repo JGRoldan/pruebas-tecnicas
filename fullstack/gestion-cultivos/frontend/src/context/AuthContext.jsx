@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(userData)
+                body: JSON.stringify(userData),
+                credentials: "include"
             })
             const response = await fetchData.json()
             if (!response.status) {

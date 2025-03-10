@@ -25,7 +25,7 @@ export default function Login() {
         <div className="flex items-center justify-center h-screen">
             {submitted && <Spinner />}
             {!submitted &&
-                <form className="w-full sm:w-1/5 p-5" onSubmit={handleLogin}>
+                <form className="w-full lg:w-1/5 p-5" onSubmit={handleLogin}>
                     <div className="mb-5">
                         <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
                         <input type="text" id="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />

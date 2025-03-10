@@ -8,8 +8,12 @@ import { startCronJob } from './utils/cron.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
+const ORIGIN = process.env.ORIGIN
 
-app.use(cors())
+app.use(cors({
+    origin: ORIGIN,
+    credentials: true
+}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
