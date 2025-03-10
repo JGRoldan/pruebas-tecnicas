@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext"
 import { Spinner } from "../components/Spinner"
 
 export default function Login() {
-    // const [loading, setLoading] = useState(false)
     const [submitted, setSubmitted] = useState(false)
     const { login } = useAuth()
     const navigate = useNavigate()
