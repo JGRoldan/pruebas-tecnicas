@@ -104,7 +104,7 @@ GET /count/:suggestionId
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/product-feedback-api.git
+git clone repo
 cd product-feedback-api
 ```
 
